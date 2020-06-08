@@ -48,8 +48,10 @@ int main(){
 			meuGrafo[j].clear();
 			
 			// ################# explicar isso aqui melhor
-			memset(vis, 0, sizeof vis);
-			memset(vis2, 0, sizeof vis2);
+			vis[j] = false;
+			vis2[j] = false;
+			//memset(vis, 0, sizeof vis);
+			//memset(vis2, 0, sizeof vis2);
 		}
 		
 		// Indicação das arestas

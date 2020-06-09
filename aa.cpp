@@ -1,20 +1,24 @@
 // Biblioteca com todas as bibliotecas mais utilizadas: iostream, vector...
 #include <bits/stdc++.h>
-#define MAXN 105
-#define INF 0x3F3F3F3F
-
 using namespace std;
-vector<int> meuGrafo[MAXN];
-bool vis[MAXN];
-bool vis2[MAXN];
 
-void dfs(int a, int espacamento){
+// Quantidade máxima de vértices, de acordo com o enunciado V(1 ≤ V ≤ 20)
+#define MAX_VERTICES 20
+// Valor que representa INIFITO
+#define INF 99999999
+// Criação do grafo
+vector<unsigned int> meuGrafo[MAX_VERTICES];
+// Criação do vetor de visitados
+bool vis[MAX_VERTICES];
+bool vis2[MAX_VERTICES];
+
+void dfs(unsigned a, unsigned espacamento){
 	
-	// Se o vertice (a) foi visitado, true. Identificando vértice CINZA
+	// Se o vertice (a) foi visitado, então true.
 	vis[a] = true;
 	for (unsigned i = 0; i < meuGrafo[a].size(); i++){
 		
-		for (int k = 0; k < espacamento * 2; k++){
+		for (unsigned k = 0; k < espacamento * 2; k++){
 			cout << " ";
 		}
 		
@@ -43,29 +47,29 @@ int main(){
 	 *   vDe: De um vértice (ligando como se fosse uma aresta)
 	 *   vPara: Para outro vértice (ligando como se fosse uma aresta)
 	 */
-	int qtdCasos, totalVertices, totalArestas, vDe, vPara;
+	unsigned qtdCasos, totalVertices, totalArestas, vDe, vPara;
 	
 	// Entrada da quantidade de Casos
 	cin >> qtdCasos;
 	
-	for (int i = 0; i < qtdCasos; i++){
+	for (unsigned i = 0; i < qtdCasos; i++){
 		
 		// Entrada da quantidadde de vértices e arestas a serem inseridas
 		cin >> totalVertices >> totalArestas;
 		
-		for (int j = 0; j < totalVertices; j++){
+		for (unsigned j = 0; j < totalVertices; j++){
 			
 			// Limpa o grafo, pode-se dizer que limpa os valores lixos, caso houver
 			meuGrafo[j].clear();
 			
-			// ################# explicar isso aqui melhor
+			// Inicializando todos as posições do visitados como falso.
 			vis[j] = false;
 			vis2[j] = false;
 			
 		}
 		
 		// Indicação das arestas
-		for (int j = 0; j < totalArestas; j++){
+		for (unsigned j = 0; j < totalArestas; j++){
 			
 			cin >> vDe >> vPara;
 			// Coloca o elemento na última posição do vetor ## MELHORAR
@@ -77,7 +81,7 @@ int main(){
 		
 		cout << "Caso " << i + 1 << endl;
 		
-		for (int j = 0; j < totalVertices; j++){
+		for (unsigned j = 0; j < totalVertices; j++){
 			
 			// Pega qualquer valor entre início e o fim do grafo
 			sort(meuGrafo[j].begin(), meuGrafo[j].end());

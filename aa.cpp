@@ -72,7 +72,7 @@ int main(){
 		for (unsigned j = 0; j < totalArestas; j++){
 			
 			cin >> vDe >> vPara;
-			// Coloca o elemento na última posição do vetor ## MELHORAR
+			// Coloca o elemento vPara na última posição da lista do indice vDe
 			meuGrafo[vDe].push_back(vPara);
 			vis2[vDe] = true;
 			vis2[vPara] = true;

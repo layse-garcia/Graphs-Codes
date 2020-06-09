@@ -76,7 +76,7 @@ void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
     // Print edges of MST using parent array 
 	for (unsigned i = 1; i < vertice; i++){
 		printf("%d - %d\n", pai[i], i); 
-		soma = valor[i];
+		soma += valor[i];
 	}
 	cout << soma << endl;
 }

@@ -16,62 +16,67 @@ void adicionaAresta(vector<pair<unsigned, unsigned>> grafo[], unsigned de, unsig
 
 }
 
-void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
+void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice, unsigned aresta){
 	
-	// Fila de prioridade para armazenar os vertices para a AGM
-	priority_queue<meuPar, vector<meuPar>, greater<meuPar>> filaPrioridade; 
+	if(aresta >= vertice - 1){
+	
+		// Fila de prioridade para armazenar os vertices para a AGM
+		priority_queue<meuPar, vector<meuPar>, greater<meuPar>> filaPrioridade; 
 
-	int inicio = 0;
+		int inicio = 0;
 
-	// Criando vetor para as chaves e inicializa como infinito
-	vector<unsigned> valor(vertice, INF); 
+		// Criando vetor para as chaves e inicializa como infinito
+		vector<unsigned> valor(vertice, INF); 
 
-	// Vetor para armazenar os pais
-	vector<int> pai(vertice, -1); 
+		// Vetor para armazenar os pais
+		vector<int> pai(vertice, -1); 
 
-	// Vetor para armazenar os vertices já inseridos na AGM
-	vector<bool> inserido(vertice, false); 
+		// Vetor para armazenar os vertices já inseridos na AGM
+		vector<bool> inserido(vertice, false); 
 
-	// Inserindo a raiz na fila de prioridade
-	filaPrioridade.push(make_pair(0, inicio)); 
-	valor[inicio] = 0; 
+		// Inserindo a raiz na fila de prioridade
+		filaPrioridade.push(make_pair(0, inicio)); 
+		valor[inicio] = 0; 
 
-	// Loop até a fila ficar vazia
-	while (!filaPrioridade.empty()){ 
-		
-		unsigned u = filaPrioridade.top().second; 
-		filaPrioridade.pop(); 
+		// Loop até a fila ficar vazia
+		while (!filaPrioridade.empty()){ 
+			
+			unsigned u = filaPrioridade.top().second; 
+			filaPrioridade.pop(); 
 
-		inserido[u] = true; // Inclui o vertice na AGM
+			inserido[u] = true; // Inclui o vertice na AGM
 
-		// Percorre os vizinhos de u
-		for (auto x : grafo[u]){
+			// Percorre os vizinhos de u
+			for (auto x : grafo[u]){
 
-			// Resgatando borda da aresta e seu custo
-			unsigned v = x.first;
-			unsigned custo = x.second;
+				// Resgatando borda da aresta e seu custo
+				unsigned v = x.first;
+				unsigned custo = x.second;
 
-			// Se v não está na AGM e seu custo é menor do que o custo atual
-			if (inserido[v] == false && valor[v] > custo){
+				// Se v não está na AGM e seu custo é menor do que o custo atual
+				if (inserido[v] == false && valor[v] > custo){
 
-				// Alterando custo de V
-				valor[v] = custo;
-				filaPrioridade.push(make_pair(valor[v], v));
-				pai[v] = u;
+					// Alterando custo de V
+					valor[v] = custo;
+					filaPrioridade.push(make_pair(valor[v], v));
+					pai[v] = u;
+
+				}
 
 			}
 
 		}
-
+		
+		unsigned soma = 0;
+		// Print edges of MST using parent array 
+		for (unsigned i = 1; i < vertice; i++){
+			//printf("%d - %d\n", pai[i], i); 
+			soma += valor[i];
+		}
+		cout << soma << endl;
+	} else {
+		cout << "impossivel" << endl;
 	}
-	
-	unsigned soma = 0;
-	// Print edges of MST using parent array 
-	for (unsigned i = 1; i < vertice; i++){
-		printf("%d - %d\n", pai[i], i); 
-		soma += valor[i];
-	}
-	cout << soma << endl;
 }
 
 
@@ -98,7 +103,7 @@ int main(){
 			adicionaAresta(meuGrafo, deVertice-1, paraVertice-1, custoAresta);
 		}
 		
-		primAGM(meuGrafo, totalVertices);
+		primAGM(meuGrafo, totalVertices, totalArestas);
 		cin >> totalVertices >> totalArestas;
 	}
 	

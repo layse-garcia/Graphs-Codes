@@ -29,7 +29,7 @@ void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
     vector<unsigned> valor(vertice, INF); 
   
     // To store parent array which in turn store MST 
-    vector<unsigned> pai(vertice, -1); 
+    vector<int> pai(vertice, -1); 
   
     // To keep track of vertices included in MST 
     vector<bool> inserido(vertice, false); 
@@ -48,7 +48,7 @@ void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
         // has to be done this way to keep the vertices 
         // sorted key (key must be first item 
         // in pair) 
-        int u = filaPrioridade.top().second; 
+        unsigned u = filaPrioridade.top().second; 
         filaPrioridade.pop(); 
   
         inserido[u] = true; // Include vertex in MST 
@@ -65,7 +65,7 @@ void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
             // than current key of v 
             if (inserido[v] == false && valor[v] > valorU) 
             { 
-                // Updating key of v 
+                // Updating key of v
                 valor[v] = valorU; 
                 filaPrioridade.push(make_pair(valor[v], v)); 
                 pai[v] = u;
@@ -92,9 +92,7 @@ int main(){
 		// Criação do grafo(Matriz de Adjacencias
 		
 		// Limpa a estrutra, pode-se dizer que limpa os valores lixos, caso houver
-		for(unsigned i = 0; i < totalVertices; i++){
-			meuGrafo[i].clear();
-		} 
+		
 		
 		for(unsigned i = 0; i < totalArestas; i++){
 			cin >> deVertice >> paraVertice >> custoAresta;
@@ -104,6 +102,8 @@ int main(){
 		}
 		
 		primAGM(meuGrafo, totalVertices);
+		
+		
 		
 	}
 	

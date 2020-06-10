@@ -79,7 +79,7 @@ int main(){
 			
 		}
 		
-		cout << "Caso " << i + 1 << ":"<< endl;
+		cout << "Caso " << i + 1 << ": "<< endl;
 		
 		for (unsigned j = 0; j < totalVertices; j++){
 			

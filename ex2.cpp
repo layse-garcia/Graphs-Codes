@@ -85,15 +85,18 @@ void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
 int main(){
 	unsigned totalVertices, totalArestas, deVertice, paraVertice, custoAresta;
 
-	
-	while(true){
-		cin >> totalVertices >> totalArestas;
-		vector<meuPar> meuGrafo[totalVertices];
+	cin >> totalVertices >> totalArestas;
+	while((totalVertices >= 2 || totalVertices <= 1000) && (totalArestas >=0 || totalArestas <= (totalVertices*(totalVertices-1)/2))){
 		// Criação do grafo(Matriz de Adjacencias
+		vector<meuPar> meuGrafo[totalVertices];
 		
 		// Limpa a estrutra, pode-se dizer que limpa os valores lixos, caso houver
-		
-		
+		for(unsigned i = 0; i < totalVertices; i++){
+			for(unsigned j = 0; j < totalVertices; j++){
+				meuGrafo[j].clear();
+			}
+			meuGrafo[i].clear();
+		}
 		for(unsigned i = 0; i < totalArestas; i++){
 			cin >> deVertice >> paraVertice >> custoAresta;
 			
@@ -102,9 +105,7 @@ int main(){
 		}
 		
 		primAGM(meuGrafo, totalVertices);
-		
-		
-		
+		cin >> totalVertices >> totalArestas;
 	}
 	
 }

@@ -17,62 +17,72 @@ void adicionaAresta(vector<pair<unsigned, unsigned>> grafo[], unsigned de, unsig
 }
 
 void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice, unsigned aresta){
-	
-	if(aresta >= vertice - 1){
-	
-		// Fila de prioridade para armazenar os vertices para a AGM
-		priority_queue<meuPar, vector<meuPar>, greater<meuPar>> filaPrioridade; 
 
-		int inicio = 0;
 
-		// Criando vetor para as chaves e inicializa como infinito
-		vector<unsigned> valor(vertice, INF); 
+	// Fila de prioridade para armazenar os vertices para a AGM
+	priority_queue<meuPar, vector<meuPar>, greater<meuPar>> filaPrioridade; 
 
-		// Vetor para armazenar os pais
-		vector<int> pai(vertice, -1); 
+	int inicio = 0;
 
-		// Vetor para armazenar os vertices já inseridos na AGM
-		vector<bool> inserido(vertice, false); 
+	// Criando vetor para as chaves e inicializa como infinito
+	vector<unsigned> valor(vertice, INF); 
 
-		// Inserindo a raiz na fila de prioridade
-		filaPrioridade.push(make_pair(0, inicio)); 
-		valor[inicio] = 0; 
+	// Vetor para armazenar os pais
+	vector<int> pai(vertice, -1); 
 
-		// Loop até a fila ficar vazia
-		while (!filaPrioridade.empty()){ 
-			
-			unsigned u = filaPrioridade.top().second; 
-			filaPrioridade.pop(); 
+	// Vetor para armazenar os vertices já inseridos na AGM
+	vector<bool> inserido(vertice, false); 
 
-			inserido[u] = true; // Inclui o vertice na AGM
+	// Inserindo a raiz na fila de prioridade
+	filaPrioridade.push(make_pair(0, inicio)); 
+	valor[inicio] = 0; 
 
-			// Percorre os vizinhos de u
-			for (auto x : grafo[u]){
+	// Loop até a fila ficar vazia
+	while (!filaPrioridade.empty()){ 
+		
+		unsigned u = filaPrioridade.top().second; 
+		filaPrioridade.pop(); 
 
-				// Resgatando borda da aresta e seu custo
-				unsigned v = x.first;
-				unsigned custo = x.second;
+		inserido[u] = true; // Inclui o vertice na AGM
+		
+		
+		
+		// Percorre os vizinhos de u
+		for (auto x : grafo[u]){
 
-				// Se v não está na AGM e seu custo é menor do que o custo atual
-				if (inserido[v] == false && valor[v] > custo){
+			// Resgatando borda da aresta e seu custo
+			unsigned v = x.first;
+			unsigned custo = x.second;
 
-					// Alterando custo de V
-					valor[v] = custo;
-					filaPrioridade.push(make_pair(valor[v], v));
-					pai[v] = u;
+			// Se v não está na AGM e seu custo é menor do que o custo atual
+			if (inserido[v] == false && valor[v] > custo){
 
-				}
+				// Alterando custo de V
+				valor[v] = custo;
+				filaPrioridade.push(make_pair(valor[v], v));
+				pai[v] = u;
 
 			}
 
 		}
-		
+
+	}
+	bool conexo = true;
+	for(auto k: inserido){
+		cout << k << " ";
+		if (conexo && !k){
+			conexo = false;
+		}
+	}
+	cout << endl;
+	if(conexo){
 		unsigned soma = 0;
 		// Print edges of MST using parent array 
 		for (unsigned i = 1; i < vertice; i++){
 			//printf("%d - %d\n", pai[i], i); 
 			soma += valor[i];
 		}
+		
 		cout << soma << endl;
 	} else {
 		cout << "impossivel" << endl;

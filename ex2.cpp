@@ -19,7 +19,7 @@ void adicionaAresta(vector<pair<unsigned, unsigned>> grafo[], unsigned de, unsig
 void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
 	
 	// Fila de prioridade para armazenar os vertices para a AGM
-	filaPrioridade<meuPar, vector<meuPar>, greater<meuPar>> filaPrioridade; 
+	priority_queue<meuPar, vector<meuPar>, greater<meuPar>> filaPrioridade; 
 
 	int inicio = 0;
 

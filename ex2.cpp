@@ -99,7 +99,7 @@ int main(){
 			cin >> deVertice >> paraVertice >> custoAresta;
 			
 			// Chama a função responsável pela inserção das arestas/custos
-			adicionaAresta(meuGrafo, deVertice, paraVertice, custoAresta);
+			adicionaAresta(meuGrafo, deVertice-1, paraVertice-1, custoAresta);
 		}
 		
 		primAGM(meuGrafo, totalVertices);

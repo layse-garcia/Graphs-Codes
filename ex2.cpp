@@ -10,10 +10,10 @@ typedef pair<unsigned, unsigned> meuPar;
 
 // Função responsável por adicionar uma aresta valorada
 void adicionaAresta(vector<pair<unsigned, unsigned>> grafo[], unsigned de, unsigned para, unsigned valor) {
-	
+
 	grafo[de].push_back(make_pair(para, valor));
 	grafo[para].push_back(make_pair(de, valor));
-	
+
 }
 
 void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
@@ -26,49 +26,45 @@ void primAGM(vector<pair<unsigned,unsigned> > grafo[], unsigned vertice){
 	// Criando vetor para as chaves e inicializa como infinito
 	vector<unsigned> valor(vertice, INF); 
 
-	// Array para armazenar os pais
+	// Vetor para armazenar os pais
 	vector<int> pai(vertice, -1); 
 
-	// Vetor para armaenar os vertices já inseridos na AGM
+	// Vetor para armazenar os vertices já inseridos na AGM
 	vector<bool> inserido(vertice, false); 
 
 	// Inserindo a raiz na fila de prioridade
 	filaPrioridade.push(make_pair(0, inicio)); 
 	valor[inicio] = 0; 
 
-	/* Looping till priority queue becomes empty */
-	while (!filaPrioridade.empty()) 
-	{ 
-		// The first vertex in pair is the minimum key 
-		// vertex, extract it from priority queue. 
-		// vertex label is stored in second of pair (it 
-		// has to be done this way to keep the vertices 
-		// sorted key (key must be first item 
-		// in pair) 
+	// Loop até a fila ficar vazia
+	while (!filaPrioridade.empty()){ 
+		
 		unsigned u = filaPrioridade.top().second; 
 		filaPrioridade.pop(); 
 
-		inserido[u] = true; // Include vertex in MST 
+		inserido[u] = true; // Inclui o vertice na AGM
 
-		// Traverse all adjacent of u 
-		for (auto x : grafo[u]) 
-		{ 
-			// Get vertex label and weight of current adjacent 
-			// of u. 
-			unsigned v = x.first; 
-			unsigned valorU = x.second; 
-  
-			// If v is not in MST and weight of (u,v) is smaller 
-			// than current key of v 
-			if (inserido[v] == false && valor[v] > valorU) 
-			{ 
-				// Updating key of v
-				valor[v] = valorU; 
-				filaPrioridade.push(make_pair(valor[v], v)); 
+		// Percorre os vizinhos de u
+		for (auto x : grafo[u]){
+
+			// Resgatando borda da aresta e seu custo
+			unsigned v = x.first;
+			unsigned custo = x.second;
+
+			// Se v não está na AGM e seu custo é menor do que o custo atual
+			if (inserido[v] == false && valor[v] > custo){
+
+				// Alterando custo de V
+				valor[v] = custo;
+				filaPrioridade.push(make_pair(valor[v], v));
 				pai[v] = u;
-			} 
-		} 
-	} 
+
+			}
+
+		}
+
+	}
+	
 	unsigned soma = 0;
 	// Print edges of MST using parent array 
 	for (unsigned i = 1; i < vertice; i++){

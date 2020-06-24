@@ -2,7 +2,7 @@
  * URI 1621: LABIRINTO
  * 
  * RESUMO DO PROBLEMA: A partir da entrada e saída do usuário, o código deve calcular
- * 					   o caminho para terminar o Labirinto.
+ * 			o caminho para terminar o Labirinto.
  * 
  * ALUNOS: Kellyson Santos da Silva - 2018200366 - 10A
  * 		   Layse Cristina Silva Garcia - 201811177 - 10A
@@ -51,7 +51,8 @@ void Grafo::insereAresta(int verticeDe, int verticePara){
 } 
 
 int Grafo::saidaLabirinto(int distancia){
-
+	
+	// Realizo a BFS duas vezes para coletar a maior distancia
 	int primeiraVez, ultimaVez;
 	primeiraVez = BFS(distancia);
 	ultimaVez = BFS(primeiraVez);

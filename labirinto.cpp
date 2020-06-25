@@ -4,8 +4,9 @@
  * RESUMO DO PROBLEMA: A partir da entrada e saída do usuário, o código deve calcular
  * 					   o maior caminho para sair do Labirinto.
  * 
- * SOLUÇÃO: Para resolver o labirinto é dado UM passo por vez, logo mapeamos a distância.
- * 			A dupla optou por usar Busca em Largura, "traçando" a ida e a volta.
+ * SOLUÇÃO: Para resolver o labirinto, é dado UM passo por vez, logo mapeamos a distância.
+ * 			A dupla optou por usar Busca em Largura, já que sua característica principal
+ * 			é explorar os vizinhos. Com a BFS foi "traçado" a ida e a volta.
  * 			Na ida, descobrimos qual é o vértice mais distante. 
  * 			Na volta, pegamos a maior distância percorrida.
  * 			
@@ -89,7 +90,8 @@ meuPar Grafo::buscaEmLargura(int inicio) {
     list<int> fila; 
 	calculaDistancia[inicio] = 0;
 	
-    // Marco o vértice que foi passado como parametro como visitado e o coloco na fila
+    // Marco o vértice que foi passado como parametro como visitado
+    // Como a fila garante a ordem de chegada, coloco na fila
     visitado[inicio] = true;
     fila.push_back(inicio); 
   

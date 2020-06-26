@@ -72,45 +72,38 @@ int Grafo::buscaEmLargura(int inicio, int V) {
 	
 	// Marco o vértice que foi passado como parametro como visitado
 	// Como a fila garante a ordem de chegada, coloco na fila
-	//visitado[inicio] = true;
+	visitado[inicio] = true;
 	fila.push_back(inicio); 
-  
-	// Será usado para pegar todos os vertices vizinhos do vértice
-	list<int>::iterator i; 
+ 
 	int maiorSequencia = 0;
+	
 	// Enquanto a fila não estiver vazia
-	
-	// Evitando um loop infinito
-	int loop = 0;
-	
-	while(!fila.empty() && loop <= MAX_VERTICES){
-		
-		loop++;
+	while(!fila.empty()){
 		
 		// Acesso o primeiro elemento da fila e depois retiro
-		int primeiroElemento = fila.front();
-		cout << "VERTICE ATUAL: " << primeiroElemento << endl;
+		unsigned int verticeAtual = fila.front();
 		fila.pop_front(); 
 		
 		// Pego os vertices vizinhos do vertice retirado.
-		for (unsigned int i = 0; i < meuGrafo[primeiroElemento].size(); i++){
+		for (unsigned int i = 0; i < meuGrafo[verticeAtual].size(); i++){
 			
 			// Recupero os vzinhos do vértice retirado 
-			unsigned int verticeAtual = meuGrafo[primeiroElemento][i];
+			unsigned int umVizinho = meuGrafo[verticeAtual][i];
 			
-			if(verticeAtual == i){
-					cout << "loop no vertice " << verticeAtual << endl;
-					existeLoop[verticeAtual] = true;
+			if(umVizinho == verticeAtual){
+				existeLoop[umVizinho] = true;
 			}
 			
 			// Se o vizinho ainda não foi visitado, faço todo o processo de enfileirar e marcar como visitado
-			if (!visitado[verticeAtual]){ 
+			if (!visitado[umVizinho]){ 
 				
 				// Somo as passagens pelos vizinhos
-				calculaDistancia[verticeAtual] = calculaDistancia[primeiroElemento]+1;
-				fila.push_back(verticeAtual);
-				visitado[i] = true;
-				cout << "distancia " << calculaDistancia[verticeAtual] << endl;
+				if (umVizinho != verticeAtual) {
+					calculaDistancia[umVizinho] = calculaDistancia[verticeAtual] + 1;
+				}
+				
+				fila.push_back(umVizinho);
+				visitado[umVizinho] = true;
 			}
 			
 			maiorSequencia = calculaDistancia[verticeAtual];

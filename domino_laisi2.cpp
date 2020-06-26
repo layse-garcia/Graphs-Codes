@@ -25,133 +25,146 @@ public:
 	
 	// Construtor
 	Grafo(){
-		for (unsigned i = 0; i < MAX_VERTICES; i++){
-			
-			// Limpa o grafo
-			meuGrafo[i].clear();
-			
-		}
+		this->limpa();
 	}
 	
-    // Função responsável por conectar um vértice ao outro, após a verificação de vizinhos
-    void insereAresta(int verticeDe, int verticePara);  
+	// Função responsável por conectar um vértice ao outro, após a verificação de vizinhos
+	void insereAresta(int verticeDe, int verticePara);  
 	
-    // Utilização da Busca em Largura 
-    int buscaEmLargura(int inicio, int V);
-    
+	// Utilização da Busca em Largura 
+	int buscaEmLargura(int inicio, int V);
+	
+	// Função que limpa o grafo
+	void limpa();
+	
 }; 
+
+void Grafo::limpa(){
+	
+	// Limpa o grafo
+	for (unsigned i = 0; i < MAX_VERTICES; i++)
+		meuGrafo[i].clear();
+}
 
 void Grafo::insereAresta(int verticeDe, int verticePara){
 	
 	// Adiciona o verticePara para a lista do verticeDe
-	// EXEMPLO: [0 -> 1, 1 -> 2 , 2 -> 4]
-    meuGrafo[verticeDe].push_back(verticePara);
-    //meuGrafo[verticePara].push_back(verticeDe);
-    
+	meuGrafo[verticeDe].push_back(verticePara);
+	meuGrafo[verticePara].push_back(verticeDe);
+	
 }
 
-int Grafo::buscaEmLargura(int inicio, int V) { 
-	// Vetor que armazena as distancias para a sequencia
-	int calculaDistancia[V];
-	bool existeLoop[V];
-    // Para todos os vertices, visitado é iniciado como falso
-    // Inicializo a distancia dos vertices em 0
-    bool *visitado = new bool[V]; 
-    for(int i = 0; i < V; i++){
-        visitado[i] = false; 
-        existeLoop[i] = false;
-        calculaDistancia[i] = 0;
+int Grafo::buscaEmLargura(int inicio, int V) {
+	
+	int calculaDistancia[V]; // Vetor que armazena as distancias para a sequencia
+	bool existeLoop[V]; // Vetor para armazenar quando se encontra um loop (Pedras com as pontas iguais)
+	bool *visitado = new bool[V]; // Vetor para armazenar os vertices visitados
+	
+	// Inicializando os vetores acima como falso e distancias em 0
+	for(int i = 0; i < V; i++){
+		visitado[i] = false; 
+		existeLoop[i] = false;
+		calculaDistancia[i] = 0;
 	}
 	
-    // Criação da fila para a Busca em Largura
-    list<int> fila; 
+	// Criação da fila para a Busca em Largura
+	list<int> fila; 
 	
-    // Marco o vértice que foi passado como parametro como visitado
-    // Como a fila garante a ordem de chegada, coloco na fila
-    //visitado[inicio] = true;
-    fila.push_back(inicio); 
+	// Marco o vértice que foi passado como parametro como visitado
+	// Como a fila garante a ordem de chegada, coloco na fila
+	//visitado[inicio] = true;
+	fila.push_back(inicio); 
   
-    // Será usado para pegar todos os vertices vizinhos do vértice
-    list<int>::iterator i; 
+	// Será usado para pegar todos os vertices vizinhos do vértice
+	list<int>::iterator i; 
 	int maiorSequencia = 0;
 	// Enquanto a fila não estiver vazia
-    while(!fila.empty()){ 
+	
+	// Evitando um loop infinito
+	int loop = 0;
+	
+	while(!fila.empty() && loop <= MAX_VERTICES){
 		
-        // Acesso o primeiro elemento da fila e depois retiro
-        int primeiroElemento = fila.front();
-        cout << "primeiro elemento da fila" << primeiroElemento << endl;
-        fila.pop_front(); 
+		loop++;
+		
+		// Acesso o primeiro elemento da fila e depois retiro
+		int primeiroElemento = fila.front();
+		cout << "VERTICE ATUAL: " << primeiroElemento << endl;
+		fila.pop_front(); 
 		
 		// Pego os vertices vizinhos do vertice retirado.
-        for (unsigned int i = 0; i < meuGrafo[primeiroElemento].size(); i++){
+		for (unsigned int i = 0; i < meuGrafo[primeiroElemento].size(); i++){
 			
 			// Recupero os vzinhos do vértice retirado 
-			unsigned int recupera = meuGrafo[primeiroElemento][i];
+			unsigned int verticeAtual = meuGrafo[primeiroElemento][i];
+			
+			if(verticeAtual == i){
+					cout << "loop no vertice " << verticeAtual << endl;
+					existeLoop[verticeAtual] = true;
+			}
 			
 			// Se o vizinho ainda não foi visitado, faço todo o processo de enfileirar e marcar como visitado
-            if (!visitado[recupera]){ 
-				if(recupera == i){
-					cout << "eh igual = " << recupera << " " << i << endl;
-					existeLoop[primeiroElemento] = true;
-				}
-                // Somo as passagens pelos vizinhos
-                calculaDistancia[recupera] = calculaDistancia[primeiroElemento]+1;
-                fila.push_back(recupera);
-                visitado[i] = true;
-                cout << "distancia " << calculaDistancia[recupera] << endl;
-            }
-            maiorSequencia = calculaDistancia[recupera];
-        } 
-        
-    }
-    int cont = 0;
-    for(int i = 0; i < V; i++){
-		if(existeLoop[i]){
-			cont ++;
-		}
+			if (!visitado[verticeAtual]){ 
+				
+				// Somo as passagens pelos vizinhos
+				calculaDistancia[verticeAtual] = calculaDistancia[primeiroElemento]+1;
+				fila.push_back(verticeAtual);
+				visitado[i] = true;
+				cout << "distancia " << calculaDistancia[verticeAtual] << endl;
+			}
+			
+			maiorSequencia = calculaDistancia[verticeAtual];
+		} 
+		
 	}
+	
+	// Contador de peças com lados iguais
+	int cont = 0;
+	for(int i = 0; i < V; i++)
+		if(existeLoop[i])
+			cont ++;
+	
+	// Adiciona peças com lados iguais aos dominós
 	maiorSequencia = maiorSequencia + cont;
-    
-    // retorno a quantidade de peças
-    return maiorSequencia;
-    
+	
+	// Retorno a quantidade de peças
+	return maiorSequencia;
+	
 } 
-  
 
 int main() { 
-	// Entrada do usuário, quantidade de inserções/arestas
-    int totalLinhas;
-    
-    // Booleana que permite que o programe continue ou pare
-    bool continua = false;
-    
-    // Entradas do usuário, queais são os vertices
-    int verticeDe = 0, verticePara = 0;
-    
-    // Entradas da matriz
-    cin >> totalLinhas;
-    
-    // TRATAMENTO: Caso as entradas não correpondam ao intervalo permitido pelo enunciado, o programa não é executado
-    if((totalLinhas <= 0) or (totalLinhas > 55)){
+	
+	int totalLinhas; // Entrada do usuário, quantidade de inserções/arestas
+	bool continua = false; // Booleana para controle de execução
+	int verticeDe = 0, verticePara = 0; // Entradas do usuário, vertice de origem e vertice de destino
+	
+	cin >> totalLinhas;
+	
+	// TRATAMENTO: Caso as entradas não correpondam ao intervalo permitido pelo enunciado, o programa não é executado
+	if((totalLinhas <= 0) or (totalLinhas > 55)){
 		continua = false;
 	}else{
 		continua = true;
 	}
 	
-    while(continua){
+	while(continua){
+		
 		Grafo meuGrafo;
+		meuGrafo.limpa();
 		
 		// Entrada do usuário conectando um vértice ao outro
 		for(int i = 0; i < totalLinhas; i++){
 			cin >> verticeDe >> verticePara;
 			meuGrafo.insereAresta(verticeDe, verticePara);
+			meuGrafo.insereAresta(verticePara, verticeDe);
 		}
 		
 		int sequencia = 0;
-		// Ao passar por todas as minhas linhas, busco a maior sequência
-		for(int i = 0; i < totalLinhas; i++){
+		// Busco a maior sequência iniciando de todos os vertices
+		for(int i = 0; i < MAX_VERTICES; i++){
 			sequencia = max(meuGrafo.buscaEmLargura(i, 10), sequencia);
 		}
+		
 		// Imprimo a quantidade da maior sequencia de peças
 		cout << sequencia << endl;
 		
@@ -165,9 +178,9 @@ int main() {
 			continua = true;
 		}
 	}
-    
-    
-  
-    return 0; 
-} 
+	
+	
+
+	return 0; 
+}
 

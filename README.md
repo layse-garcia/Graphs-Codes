@@ -8,4 +8,4 @@ O projeto possui a partir da pasta `exercícios` os diretórios com os REOs
 
 ---
 
-| © Layse, Kellyson - 2020/1
+> © Layse, Kellyson - 2020/1

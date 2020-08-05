@@ -5,6 +5,7 @@ O projeto foi criado com o objetivo de organizar os códigos gerados para a disc
 ### Trabalho Final
 
 - O trabalho se encontra no diretório [`trabalho-final`](/trabalho-final) e será desenvolvido em *Python*.
+
 Consiste em um programa que computa através de coloração de grafos, o melhor horário que um grupo pode efetuar suas compras no supermercado.
 
 ### A luta dos REOs

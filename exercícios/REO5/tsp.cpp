@@ -1,9 +1,12 @@
 /* REO 05 - Algoritmos em Grafos
  * URI 2088: Combate à Dengue
  * 
- * RESUMO DO PROBLEMA: 
+ * RESUMO DO PROBLEMA: João pegou dengue e suspeita que há focos próximo a sua casa.
+ * 					   Quando melhorar, João quer passar por todos os focos apenas uma 
+ * 					   vez para destruí-los e retornar para sua casa. Logo, é preciso 
+ * 					   calcular a distância mínima a ser percorrida.
  * 
- * SOLUÇÃO: 
+ * SOLUÇÃO: EM DESENVOLVIMENTO
  * 
  * ALUNOS: Kellyson Santos da Silva - 2018200366 - 10A
  * 		   Layse Cristina Silva Garcia - 201811177 - 10A
@@ -14,29 +17,23 @@
 #include <math.h>
 
 using namespace std; 
-
-// Valor simbólico que representa o INFINITO
-#define INF 99999
-// Maximo de focos possíveis, de acordo com o problema
-#define MAX_FOCOS 15
+// Valor simbólico de infinito
+#define INF 9999999
+// Quantidade de focos possíveis 15 + 1(origem)
+#define MAX_FOCOS 16
 
 // Classe Grafo
 class Grafo{
 	private:
-		unsigned int vertices; // numero de vértices
-		int origemX; // armazeno a origemX passada
-		int origemY; // armazeno a origemY passada
+		int vertices; // numero de vértices
 		int pontosX[MAX_FOCOS]; // armazeno todos os pontosX de foco
 		int pontosY[MAX_FOCOS]; // armazeno todos os pontosX de foco
 		double** meuGrafoMatriz; // matriz que armazena as distancias
 		
 	public:
 		// Construtor da classe e suas atribuições
-		Grafo(int numVertices, int oX, int oY){
+		Grafo(int numVertices){
 			vertices = numVertices;
-			origemX = oX;
-			origemY = oY;
-			
 			meuGrafoMatriz = new double*[numVertices];
 			for (int i = 0; i < numVertices; i++) {
 				meuGrafoMatriz[i] = new double[numVertices];
@@ -53,20 +50,25 @@ class Grafo{
 			}
 			//cout << "finished" << endl;
 		}
-		//void adicionaAresta(int pX, int pY, int distancia);
-		void capturaPontos(int X, int Y, int posicao);
-		void calculaDistancia(int posicao);
+		
 		void imprimeMatriz();
-		double travllingSalesmanProblem(unsigned int s);
-		void segundaMenorDistancia(int focos);
+		void capturaPontos(int X, int Y, int posicao);
+		void calculaDistancia();
+		double distanciaEntreDoisPontos(int pX1, int pY1, int pX2, int pY2);
+		double travllingSalesmanProblem(int s);
+		
 };
 
-// Grafo não direcionado, função que adiciona aresta de um vértice para
-// outro, com o valor da distância
-/*void Grafo::adicionaAresta(int pX, int pY, int distancia){
-	meuGrafoMatriz[pX][pY] = distancia;
-	meuGrafoMatriz[pY][pX] = distancia;
-}*/
+// Função para debugar a matriz
+void Grafo::imprimeMatriz(){
+	for(int i =0 ; i < vertices; i++){
+		for(int j = 0 ; j < vertices; j++){
+			cout << meuGrafoMatriz[i][j] << " ";	
+		}
+		cout << endl;
+	}
+}
+
 
 // Armazeno os pontos de Foco em um vetor
 void Grafo::capturaPontos(int X, int Y, int posicao){
@@ -74,153 +76,84 @@ void Grafo::capturaPontos(int X, int Y, int posicao){
 	pontosY[posicao] = Y;
 }
 
-// Verifico a distancia de todos os pontos de foco em relação a origem e pego a segunda menor distancia
-void Grafo::segundaMenorDistancia(int focos){
-	double segundaMenorDistancia[focos];
-	int ordenaPosicao[focos];
-	for(int i = 0; i < focos; i++){
-		segundaMenorDistancia[i] = sqrt((pow(pontosX[i] - origemX, 2) + pow(pontosY[i] - origemY, 2)));
-		cout << "Indice: " << i << " " << segundaMenorDistancia[i] << endl;
-		ordenaPosicao[i] = i;
-	}
-	double aux;
-	int ajuda;
-	for(int i = 0; i < focos; i++){
-		for (int j = 0; j < focos; j++){
-			if (segundaMenorDistancia[i] < segundaMenorDistancia[j]){
-				//aqui acontece a troca, do maior cara  vaia para a direita e o menor para a esquerda
-				aux = segundaMenorDistancia[i];
-				segundaMenorDistancia[i] = segundaMenorDistancia[j];
-				segundaMenorDistancia[j] = aux;
-				
-				ajuda = ordenaPosicao[i];
-				ordenaPosicao[i] = ordenaPosicao[j];
-				ordenaPosicao[j] = ajuda;
-				
-			}
+// Calculo a distancia dos pontos X e Y, criando a "aresta" na minha estrutura
+void Grafo::calculaDistancia(){
+	for (int i = 0; i < vertices; i++){
+		for (int j = i; j < vertices; j++){
+			meuGrafoMatriz[i][j] = distanciaEntreDoisPontos(pontosX[i], pontosY[i], pontosX[j], pontosY[j]);
+			meuGrafoMatriz[j][i] = distanciaEntreDoisPontos(pontosX[i], pontosY[i], pontosX[j], pontosY[j]);
 		}
-	}
-	for(int i = 0; i < focos; i++){
-		//cout << "OLD POS: " << ordenaPosicao[i] << " " << segundaMenorDistancia[i] << endl;
-		// fecho o grafo
-		if(i == ordenaPosicao[1]){
-			meuGrafoMatriz[i][0] = segundaMenorDistancia[1];
-			meuGrafoMatriz[0][i] = segundaMenorDistancia[1];
-		}
-	}
-	//return segundaMenorDistancia[1];
+	}	
 }
 
-void Grafo::imprimeMatriz(){
-	for(unsigned int i =0 ; i < vertices; i++){
-		for(unsigned int j = 0 ; j < vertices; j++){
-			cout << meuGrafoMatriz[i][j] << " ";	
-		}
-		cout << endl;
-	}
-}
-
-void Grafo::calculaDistancia(int posicao){
+// Fórmula para encontrar a distância entre dois pontos(tamanho da aresta)
+double Grafo::distanciaEntreDoisPontos(int pX1, int pY1, int pX2, int pY2){
 	double dist;
-	
-	
-	if(posicao == 0){ //meu primeiro foco, conecto com a origem
-		dist = sqrt((pow(pontosX[posicao] - origemX, 2) + pow(pontosY[posicao] - origemY, 2)));
-		meuGrafoMatriz[posicao+1][0] = dist;
-		meuGrafoMatriz[0][posicao+1] = dist;
-		
-	}else if(posicao > 0){ // segundo foco em diante
-		dist = sqrt(pow(pontosX[posicao] - pontosX[posicao-1], 2) + pow(pontosY[posicao] - pontosY[posicao-1], 2));
-		meuGrafoMatriz[posicao][posicao+1] = dist;
-		meuGrafoMatriz[posicao+1][posicao] = dist;
-	}
-	
-	/*
-					  // 0   1    2    3   4
-						{0,2.24,9999,1.41,9999}, // 0
-						{2.24,0,1.41,9999,9999}, // 1
-						{9999,1.41,0,9999,1},    // 2
-						{1.41,9999,9999,0,2.83}, // 3
-						{9999,9999,1,2.83,0}     // 4
-						
-						0      2.24 2.83 INF  INF
-						2.24     0  1.41 INF  INF
-						2.83   1.41  0    1   INF
-						INF    INF   1    0   1.41
-						INF    INF  INF  1.41  0
-						
-	 * */
-	//return (double)dist;
+	dist = sqrt((pow(pX1 - pX2, 2) + pow(pY1 - pY2, 2)));
+	return dist;
 }
 
-double Grafo::travllingSalesmanProblem(unsigned int s){ 
-    // store all vertex apart from source vertex 
-    vector<unsigned int> verticesTSP; 
-    for (unsigned int i = 0; i < vertices; i++){
+// Problema resolvido com TSP
+double Grafo::travllingSalesmanProblem(int s){  
+    // Pego todos os vértices a partir do vértice passado por parâmetro
+    vector<int> verticesTSP; 
+    for (int i = 0; i < vertices; i++){
         if (i != s) {
             verticesTSP.push_back(i);
 		}
 	}
-    // store minimum weight Hamiltonian Cycle. 
+	
+    // Recupero a menor distância do Grafo Hamiltoniano(ciclo)
     double min_path = INT_MAX; 
-    do { 
-  
-        // store current Path weight(cost) 
+    
+    // Função que reorganiza os elementos no intervalo [primeiro, último)
+    // na próxima permutação lexicograficamente maior.
+    while(next_permutation(verticesTSP.begin(), verticesTSP.end())){
+		// Inicializo a minha variável de caminho Atual como 0
         double caminhoAtual = 0; 
           
-        // compute current path weight 
-        unsigned int k = s; 
-        for (unsigned int i = 0; i < verticesTSP.size(); i++) { 
+        // Incremento as distâncias
+        int k = s; 
+        for (int i = 0; i < (int)verticesTSP.size(); i++) { 
             caminhoAtual += meuGrafoMatriz[k][verticesTSP[i]]; 
             k = verticesTSP[i]; 
         } 
         caminhoAtual += meuGrafoMatriz[k][s]; 
   
-        // update minimum 
-        min_path = min(min_path, caminhoAtual); 
-         
-    } while (next_permutation(verticesTSP.begin(), verticesTSP.end())); 
-  
+        // Atualizo o menor caminho
+        min_path = min(caminhoAtual, min_path); 
+	}
+	// Retorno o menor caminho
     return min_path; 
 } 
 
-int main () { 
-	 
-	// Variáveis que determinam quantidade de vértices, arestas, e os parentes
-	
-	int focoX, focoY, qtdFocos, origemX, origemY;
-	
-	
-	
-	while(qtdFocos != 0){
-		// entrada de dados
-		cin >> qtdFocos;
-		// Se minha quantidade de vértices for igual ou menor que 0, então não continuo o código
-		if(qtdFocos == 0){
-			break;
-			return 0;
+int main(){
+	int qtdFocos;
+	// Entrada de quantidade de focos
+	cin >> qtdFocos;
+	while(qtdFocos > 0){
+		// Adiciono mais um, para considerar o índice 0 como origem
+		qtdFocos = qtdFocos+1;
+		int pontoX, pontoY;
+		
+		// Crio meu grafo
+		Grafo meuGrafo(qtdFocos);
+
+		// Guardo os valores dos focos em vetores
+		for (int i = 0; i < qtdFocos; i++){
+			cin >> pontoX >> pontoY;
+			meuGrafo.capturaPontos(pontoX, pontoY, i);
 		}
-		cin >> origemX >> origemY;
-		// crio o grafo com a quantidade de vértices passada
-		Grafo meuGrafo(qtdFocos+1, origemX, origemY);
+		// Insere as distâncias na Matriz de Adjacências
+		meuGrafo.calculaDistancia();
+		// DEBUG: analisar a matriz
+		// meuGrafo.imprimeMatriz();
 		
-		for(int i = 0; i < qtdFocos; i++){
-			cin >> focoX >> focoY;
-			meuGrafo.capturaPontos(focoX, focoY, i);
-			
-			meuGrafo.calculaDistancia(i);
-			
-		}
-		
-		meuGrafo.segundaMenorDistancia(qtdFocos);
-		meuGrafo.imprimeMatriz();
-		
-		
-		unsigned int s = 0; 
+		int s = 0;
+		// Como estamos utilizando double, já configuramos a saída para sair
+		// duas casas decimais
 		printf("%.2f\n",  meuGrafo.travllingSalesmanProblem(s)); 
-		
-		
+		cin >> qtdFocos;
 	}
 	return 0;
 }
-

@@ -17,7 +17,7 @@ class Vertice:
     def getVizinhos(self):
         return self.vizinhos
 
-    def add(self, vetice):
+    def add(self, vertice):
         self.vizinhos.append(vertice)
 
 	# Destrutor - chamando o destrutor
@@ -27,5 +27,4 @@ class Vertice:
     # Método que decide se um vértice é incompatível com outro
     # Retorna TRUE se deve ser criada uma aresta
     def compare(self, vertice):
-        print('Implementar método de comparação')
-        return False
+        return self.pessoa.getQuadroDeRisco() != vertice.pessoa.getQuadroDeRisco()

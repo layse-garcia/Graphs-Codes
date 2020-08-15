@@ -41,3 +41,9 @@ class Grafo:
                     vertex.add(innerVertex)
 
         return lista
+
+    # Só serve pra imprimeir quantos vizinhos tem cada vértice
+    # Nada mais
+    def GEROU_GRAFO(self):
+        for node in self.graph:
+            print(len(node.vizinhos))

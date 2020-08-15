@@ -34,6 +34,9 @@ def main():
     pessoas = buscarPessoas(arquivo, planilha)
 
     grafo = Grafo(pessoas)
+    # Só imprime quantos vizonhos tem cada vértice :)
+    # Até aqui já temos um grafo bipartido
+    grafo.GEROU_GRAFO()
 
 if __name__ == "__main__":
     main()

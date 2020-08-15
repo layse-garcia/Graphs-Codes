@@ -33,7 +33,3 @@ class Pessoa:
 
     def getSintomas(self):
     	return self.sintomas
-
-    # Destrutor - chamando o destrutor
-    def __del__(self):
-        print('Destrutor chamado.')

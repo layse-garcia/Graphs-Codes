@@ -1,20 +1,17 @@
 # coding: utf-8
-#-----------------------------------------------------------------------------------------------------------------------------------#
 '''------------------------------------------------------------Imports------------------------------------------------------------'''
-# Instalar: pip install openpyxl
-import openpyxl
+import openpyxl #install from: pip install openpyxl
+from classes.Grafo import Grafo
+from classes.Pessoa import Pessoa
+'''-------------------------------------------------------------------------------------------------------------------------------'''
 
-from Pessoa import Pessoa
-from Vertice import Vertice
+def buscarPessoas(nomeArquivo, nomeDaAba):
 
-#-----------------------------------------------------------------------------------------------------------------------------------#
-
-def testePlanilha(nomeArquivo, nomeDaAba):
+    pessoas = []
     # Carrego o meu arquivo
     workBook = openpyxl.load_workbook(nomeArquivo)
-
     workSheet = workBook[nomeDaAba]
-    # Planilha começa sempre por 1
+
     for linha in range(2, workSheet.max_row + 1): # +1 não inclusivo
         idade = workSheet.cell(row = linha, column = 2).value
         sexo = workSheet.cell(row = linha, column = 3).value
@@ -25,50 +22,18 @@ def testePlanilha(nomeArquivo, nomeDaAba):
         diasDaSemana = str(workSheet.cell(row = linha, column = 8).value).split(' - ')
         sintomas = workSheet.cell(row = linha, column = 9).value
 
-        vertice = Vertice(idade, sexo, cidade, quadroDeRisco, tempoMedio, horarioDePreferencia, diasDaSemana, sintomas)
-        print(idade, sexo, cidade, quadroDeRisco, tempoMedio, horarioDePreferencia, diasDaSemana, sintomas)
+        pessoa = Pessoa(idade, sexo, cidade, quadroDeRisco, tempoMedio, horarioDePreferencia, diasDaSemana, sintomas)
+        pessoas.append(pessoa)
 
-class Vertice:
-  # Construtor do Vertice
-  def __init__(self, idade, sexo, cidade, quadroDeRisco, tempoMedioCompras, ListaHorarioCompras, ListaDiasSemana, sintoma):
-    self.idade = idade
-    self.sexo = sexo
-    self.cidade = cidade
-    self.quadroDeRisco = quadroDeRisco
-    self.tempoMedioCompras = tempoMedioCompras
-    self.horarioCompras = ListaHorarioCompras
-    self.diaSemana = ListaDiasSemana
-    self.sintoma = sintoma
-    self.cor = -1
-
-    #FAZ O DESTRUTOR DESSA POHAAA
-
-  def getIdade(self):
-    return self.idade
-
-  def getSexo(self):
-    return self.sexo
-
-  def getCidade(self):
-    return self.cidade
-
-  def getQuadroDeRisco(self):
-    return self.quadroDeRisco
-
-  def getTempoMedioCompras(self):
-    return self.tempoMedioCompras
-
-  def getHorarioCompras(self):
-    return self.horarioCompras
-
-  def getDiaSemana(self):
-    return self.diaSemana
-
-  def getSintoma(self):
-    return self.sintoma
+    return pessoas
 
 def main():
-    testePlanilha('resultadopesquisa.xlsx', 'respostas')
+
+    arquivo = 'files/resultadopesquisa.xlsx'
+    planilha = 'respostas'
+    pessoas = buscarPessoas(arquivo, planilha)
+
+    grafo = Grafo(pessoas)
 
 if __name__ == "__main__":
     main()

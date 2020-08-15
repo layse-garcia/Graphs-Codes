@@ -32,7 +32,8 @@ class Grafo:
         lista = []
 
         for pessoa in pessoas:
-            lista.append(Vertice(pessoa))
+            if not pessoa.getSintomas():
+                lista.append(Vertice(pessoa))
 
         for vertex in lista:
             for innerVertex in lista:

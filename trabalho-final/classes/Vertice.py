@@ -27,4 +27,8 @@ class Vertice:
     # Método que decide se um vértice é incompatível com outro
     # Retorna TRUE se deve ser criada uma aresta
     def compare(self, vertice):
-        return self.pessoa.getQuadroDeRisco() != vertice.pessoa.getQuadroDeRisco()
+
+        saoGrupoRisco = self.pessoa.getQuadroDeRisco() != vertice.pessoa.getQuadroDeRisco()
+
+
+        return saoGrupoRisco

@@ -20,7 +20,7 @@ class Pessoa:
     	return self.cidade
 
     def getQuadroDeRisco(self):
-    	return self.quadroDeRisco
+    	return self.quadroDeRisco or self.idade >= 60
 
     def getTempoDeCompra(self):
     	return self.tempoDeCompra

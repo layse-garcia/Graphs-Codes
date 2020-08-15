@@ -1,12 +1,15 @@
 # coding: utf-8
 import openpyxl #install from: pip install openpyxl
-from classes.Pessoa import Pessoa
+from Pessoa import Pessoa
+from enum.Enums import Enums
 
 class XlsReaderHelper:
     @staticmethod
     def buscarPessoas(nomeArquivo, nomeDaAba):
 
         pessoas = []
+        dias = Enums.DIAS
+        horarios = Enums.HORARIOS
         # Carrego o meu arquivo
         workBook = openpyxl.load_workbook(nomeArquivo)
         workSheet = workBook[nomeDaAba]

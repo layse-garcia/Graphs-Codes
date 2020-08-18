@@ -1,6 +1,6 @@
 # coding: utf-8
 '''------------------------------------------------------------Imports------------------------------------------------------------'''
-from util.Reader import XlsReaderHelper
+from classes.Reader import XlsReaderHelper
 from classes.Grafo import Grafo
 '''-------------------------------------------------------------------------------------------------------------------------------'''
 
@@ -8,7 +8,7 @@ def main():
 
     arquivo = 'files/resultadopesquisa.xlsx'
     planilha = 'respostas'
-    pessoas = XlsReaderHelper.buscarPessoas(arquivo, planilha)
+    pessoas = XlsReaderHelper(arquivo, planilha).buscarPessoas()
 
     grafo = Grafo(pessoas)
     # Só imprime quantos vizonhos tem cada vértice :)

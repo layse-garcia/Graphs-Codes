@@ -4,27 +4,41 @@ from Pessoa import Pessoa
 from enum.Enums import Enums
 
 class XlsReaderHelper:
-    @staticmethod
-    def buscarPessoas(nomeArquivo, nomeDaAba):
+
+    # Construtor da classe inicializa o leitor do arquivo
+    def __init__(self, arquivo, aba):
+        workBook = openpyxl.load_workbook(arquivo)
+        self.workSheet = workBook[aba]
+        self.maxRow =  self.workSheet.max_row
+
+    def getCell(self, linha, coluna):
+        return self.workSheet.cell(row = linha, column = coluna).value
+
+    def buscarPessoas(self):
 
         pessoas = []
-        dias = Enums.DIAS
-        horarios = Enums.HORARIOS
-        # Carrego o meu arquivo
-        workBook = openpyxl.load_workbook(nomeArquivo)
-        workSheet = workBook[nomeDaAba]
 
-        for linha in range(2, workSheet.max_row + 1): # +1 não inclusivo
-            idade = workSheet.cell(row = linha, column = 2).value
-            sexo = workSheet.cell(row = linha, column = 3).value
-            cidade = workSheet.cell(row = linha, column = 4).value
-            quadroDeRisco = workSheet.cell(row = linha, column = 5).value
-            tempoMedio = workSheet.cell(row = linha, column = 6).value
-            horarioDePreferencia = str(workSheet.cell(row = linha, column = 7).value).split(' - ')
-            diasDaSemana = str(workSheet.cell(row = linha, column = 8).value).split(' - ')
-            sintomas = workSheet.cell(row = linha, column = 9).value
+        integer = 2
+        for linha in range(2, self.maxRow + 1): # +1 não inclusivo
+
+            idade = self.getCell(linha, 2)
+            sexo = self.getCell(linha, 3)
+            cidade = self.getCell(linha, 4)
+            quadroDeRisco = self.getCell(linha, 5)
+            tempoMedio = self.getCell(linha, 6)
+
+            horarioDePreferencia = str(self.getCell(linha, 7)).split(' - ')
+            horarioDePreferencia = toInteger(horarioDePreferencia)
+
+            diasDaSemana = str(self.getCell(linha, 8)).split(' - ')
+            diasDaSemana = toInteger(diasDaSemana)
+
+            sintomas = self.getCell(linha, 9)
 
             pessoa = Pessoa(idade, sexo, cidade, quadroDeRisco, tempoMedio, horarioDePreferencia, diasDaSemana, sintomas)
             pessoas.append(pessoa)
 
         return pessoas
+
+def toInteger(lista):
+    return list(map(int, lista))

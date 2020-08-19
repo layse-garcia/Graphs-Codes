@@ -14,11 +14,17 @@ class Vertice:
 	def getCor(self):
 		return self.cor
 
+    def setCor(self, cor):
+        self.cor = cor
+
     def getVizinhos(self):
         return self.vizinhos
 
     def add(self, vertice):
         self.vizinhos.append(vertice)
+
+    def getCoresVizinhas(self):
+        return [vizinho.getCor() for vizinho in self.getVizinhos()]
 
 	# Destrutor - chamando o destrutor
     #def __del__(self):

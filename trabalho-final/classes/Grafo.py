@@ -43,6 +43,31 @@ class Grafo:
 
         return lista
 
+    def gerarHorario(self):
+
+        for vertice in self.graph:
+
+            color = vertice.cor
+
+            if color < 0:
+
+                counter = 0
+                print(vertice)
+                coresPossiveis = vertice.pessoa.horarioPreferencia
+                coresVizinhas = vertice.getCoresVizinhas()
+                disponivel = False
+
+                while not disponivel and counter < len(coresPossiveis):
+                    corAtual = coresPossiveis[counter]
+                    disponivel = coresVizinhas.count(corAtual) == 0
+                    counter += 1
+
+                if disponivel:
+                    vertice.setCor(corAtual)
+                else:
+                    vertice.setCor(-999)
+
+
     # Só serve pra imprimeir quantos vizinhos tem cada vértice
     # Nada mais
     def GEROU_GRAFO(self):

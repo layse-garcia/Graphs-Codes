@@ -25,7 +25,7 @@ class Pessoa:
     def getTempoDeCompra(self):
     	return self.tempoDeCompra
 
-    def getHorarioPreferencia(self):
+    def getHorarioDePreferencia(self):
     	return self.horarioDePreferencia
 
     def getDiasDaSemana(self):

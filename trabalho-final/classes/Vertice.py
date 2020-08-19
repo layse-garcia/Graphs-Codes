@@ -24,7 +24,7 @@ class Vertice:
         self.vizinhos.append(vertice)
 
     def getCoresVizinhas(self):
-        return [vizinho.getCor() for vizinho in self.getVizinhos()]
+        return [vizinho.cor for vizinho in self.vizinhos]
 
 	# Destrutor - chamando o destrutor
     #def __del__(self):

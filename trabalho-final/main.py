@@ -11,11 +11,11 @@ def main():
     pessoas = XlsReaderHelper(arquivo, planilha).buscarPessoas()
 
     grafo = Grafo(pessoas)
-    # Só imprime quantos vizonhos tem cada vértice :)
-    # Até aqui já temos um grafo bipartido
-    #grafo.GEROU_GRAFO()
-
     grafo.gerarHorario()
+    # Até aqui já temos um grafo bipartido
+    # Imprime a cor do vértice
+    # -999 todos os vizinhos já tem alguma das cores disponíveis
+    grafo.GEROU_GRAFO()
 
 if __name__ == "__main__":
     main()

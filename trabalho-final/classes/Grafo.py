@@ -45,31 +45,43 @@ class Grafo:
 
     def gerarHorario(self):
 
+        #Percorre cada vértice do grafo
         for vertice in self.graph:
 
             color = vertice.cor
 
+            #E caso não seja colorido
             if color < 0:
 
                 counter = 0
-                print(vertice)
-                coresPossiveis = vertice.pessoa.horarioPreferencia
+                coresPossiveis = vertice.pessoa.horarioDePreferencia
                 coresVizinhas = vertice.getCoresVizinhas()
                 disponivel = False
 
+                #Verifica se uma de seus possíveis horários está disponível
+                #Para assim que encontra
                 while not disponivel and counter < len(coresPossiveis):
                     corAtual = coresPossiveis[counter]
                     disponivel = coresVizinhas.count(corAtual) == 0
                     counter += 1
 
+                #Caso encontre, insere essa pessoa nesse horário
                 if disponivel:
                     vertice.setCor(corAtual)
                 else:
                     vertice.setCor(-999)
 
+    '''
+        Sim é uma abordagem burra, que separa todo mundo o máximo possível
+        Já pensei em algumas formas de "aglomerar" mais pessoas em um só horário
+
+        Uma ordenação no início pode priorizar as pessoas do grupo de risco
+        A verificação se alguém já foi inserido pode ser removida :)
+    '''
 
     # Só serve pra imprimeir quantos vizinhos tem cada vértice
     # Nada mais
     def GEROU_GRAFO(self):
         for node in self.graph:
-            print(len(node.vizinhos))
+            print(node.cor)
+            #print(len(node.vizinhos))

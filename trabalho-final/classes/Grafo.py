@@ -121,7 +121,23 @@ class Grafo:
     # Só serve pra imprimeir quantos vizinhos tem cada vértice
     # Nada mais
     def GEROU_GRAFO(self):
-        for node in self.graph:
-            print(str(node.pessoa.index) + ' no dia ' + Enums.DIAS[node.cor[1]] + ' às ' + Enums.HORARIOS[node.cor[0]])
 
-        print("Criei um index com a linha :)")
+        semana = [[None for i in range(6)] for i in range(11)]
+
+        for node in self.graph:
+            semana[node.cor[0]][node.cor[1]] = node.pessoa.index
+            #print(str(node.pessoa.index) + ' no dia ' + Enums.DIAS[node.cor[1]] + ' às ' + Enums.HORARIOS[node.cor[0]])
+
+
+        dias = ["SEGUNDA", "TERCA", "QUARTA", "QUINTA", "SEXTA", "SABADO"]
+        semana.insert(0, dias)
+
+        for coisa in semana:
+            string = ''
+            for coisinha in coisa:
+                string += str(coisinha) if coisinha else "-"
+                string += "\t"
+
+            print(string)
+
+        print("\nCriei um index com a linha :)\nE fiz essa tabelinha\n")

@@ -35,7 +35,7 @@ class XlsReaderHelper:
 
             sintomas = self.getCell(linha, 9)
 
-            pessoa = Pessoa(idade, sexo, cidade, quadroDeRisco, tempoMedio, horarioDePreferencia, diasDaSemana, sintomas)
+            pessoa = Pessoa(linha - 1, idade, sexo, cidade, quadroDeRisco, tempoMedio, horarioDePreferencia, diasDaSemana, sintomas)
             pessoas.append(pessoa)
 
         return pessoas

@@ -1,4 +1,13 @@
 # coding: utf-8
+
+###############################################################################
+######            TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                 ######
+######                  TEMA: COLORAÇÃO EM GRAFOS                        ######
+######                                                                   ######
+######      KELLYSON SANTOS DA SILVA - 201820366 - 10A                   ######
+######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######
+###############################################################################
+
 '''------------------------------------------------------------Imports------------------------------------------------------------'''
 from classes.Reader import XlsReaderHelper
 from classes.Grafo import Grafo

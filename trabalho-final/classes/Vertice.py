@@ -1,11 +1,20 @@
 # coding: utf-8
+
+###############################################################################
+######            TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                 ######
+######                  TEMA: COLORAÇÃO EM GRAFOS                        ######
+######                                                                   ######
+######      KELLYSON SANTOS DA SILVA - 201820366 - 10A                   ######
+######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######
+###############################################################################
+
 from Pessoa import Pessoa
 
 class Vertice:
     # Construtor do Vertice
     def __init__(self, pessoa):
         self.pessoa = pessoa
-        self.cor = -1
+        self.cor = (-1, -1)
         self.vizinhos = []
 
 	def getPessoa(self):
@@ -35,6 +44,5 @@ class Vertice:
     def compare(self, vertice):
 
         saoGrupoRisco = self.pessoa.getQuadroDeRisco() != vertice.pessoa.getQuadroDeRisco()
-
 
         return saoGrupoRisco

@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
+#define ROOT -99999
 
 using namespace std;
+
 //[listaAdjacencia[l] representa a l-esima linha da lista de adjacencia
 int numCaminhosDistintos(const vector<vector<int> > &listaAdjacencia, int x, int y) {
     // Criação da fila para a Busca em Largura
@@ -11,7 +13,7 @@ int numCaminhosDistintos(const vector<vector<int> > &listaAdjacencia, int x, int
     vector<int> pai = new vector<int>(size, -1);
 
     // Marca o nó X como visitado e é colocado na fila
-    pai[x] = null;
+    pai[x] = ROOT;
     queue.push_back(x);
 
     // Ponteiro que vai percorrer os elementos da lista de adjacencia
@@ -26,12 +28,14 @@ int numCaminhosDistintos(const vector<vector<int> > &listaAdjacencia, int x, int
 
         // Para toda lista da vértice retirado..
         for(i = listaAdjacencia[x].begin(); i != listaAdjacencia[x].end(); i++){
-            // Se o vértice ainda não foi visitado, encontra ele e o marca
-            if(!visitado[*i]){
-                visitado[*i] = true;
-                queue.push_back(*i);
 
-                return PATH; //Mas quem é o PATH?
+            if(*i == y){
+              return ;
+            }
+
+            if(pai[*i] < 0){
+                pai[*i] = x;
+                queue.push_back(*i);
             }
         }
 

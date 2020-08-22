@@ -1,3 +1,8 @@
 # Apenas o trabalho de Grafos
 
-> Inserir aqui os detalhes futuramente
+- Python 3.4 (Não necessariamente por enquanto)
+
+### Sobre o trabalho
+
+O objetivo é colorir um grafo com o máximo de cores possíveis (66), de modo que as pessoas sejam
+arranjadas durante a semana evitando aglomerações.

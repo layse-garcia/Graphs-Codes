@@ -1,8 +1,10 @@
 # coding: utf-8
 
 ###############################################################################
-######            TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                 ######
-######                  TEMA: COLORAÇÃO EM GRAFOS                        ######
+######             TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                ######
+######                   TEMA: COLORAÇÃO EM GRAFOS                       ######
+######                                                                   ######
+######                      Python Version: 3.4                          ######
 ######                                                                   ######
 ######      KELLYSON SANTOS DA SILVA - 201820366 - 10A                   ######
 ######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######
@@ -13,6 +15,9 @@ from classes.Reader import XlsReaderHelper
 from classes.Grafo import Grafo
 '''-------------------------------------------------------------------------------------------------------------------------------'''
 
+'''
+    Método main que executa o código.
+'''
 def main():
 
     arquivo = 'files/resultadopesquisa.xlsx'
@@ -21,9 +26,8 @@ def main():
 
     grafo = Grafo(pessoas)
     grafo.gerarHorario()
-    # Até aqui já temos um grafo bipartido
-    # Imprime a cor do vértice
-    # -999 todos os vizinhos já tem alguma das cores disponíveis
+
+    # PARA FINS DE TESTE
     grafo.GEROU_GRAFO()
 
 if __name__ == "__main__":

@@ -1,26 +1,33 @@
 # coding: utf-8
 
 ###############################################################################
-######            TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                 ######
-######                  TEMA: COLORAÇÃO EM GRAFOS                        ######
+######             TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                ######
+######                   TEMA: COLORAÇÃO EM GRAFOS                       ######
+######                                                                   ######
+######                      Python Version: 3.4                          ######
 ######                                                                   ######
 ######      KELLYSON SANTOS DA SILVA - 201820366 - 10A                   ######
 ######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######
 ###############################################################################
 
+'''------------------------------------------------------------Imports------------------------------------------------------------'''
 from Vertice import Vertice
 from Pessoa import Pessoa
+from Schedule import Schedule
 from enum.Enums import Enums
+
 import copy
+import random
+'''-------------------------------------------------------------------------------------------------------------------------------'''
 
 '''
-A classe Grafo ('-')
+A classe Grafo ( '-')
 
 Ela representa a parte principal do projeto, armazenando o grafo em
 uma estrutura, e contendo em seus métodos os algoritmos necessários
 para a execução do projeto como um todo.
 
-Neste problema utilizamos lista de adjacencias para representar
+Neste problema utilizamos lista de adjacências para representar
 nosso grafo :)
 '''
 
@@ -68,9 +75,12 @@ class Grafo:
 
         return lista
 
-    def gerarHorario(self):
+    def gerarHorario(self, limite = 5, priorizarGR = False):
 
-        self.priorizarGrupoDeRisco()
+        self.sechedule = Schedule()
+
+        if priorizarGR:
+            self.priorizarGrupoDeRisco()
 
         # Percorre cada vértice do grafo
         for vertice in self.graph:
@@ -78,33 +88,21 @@ class Grafo:
             horariosPossiveis = vertice.pessoa.horarioDePreferencia
             diasPossiveis = vertice.pessoa.diasDaSemana
 
-            counter = 0
-            disponivel = False
+            vertice.cor = self.encontrarHorario(diasPossiveis, horariosPossiveis, vertice.horariosImpedidos())
 
-            vertice.cor = self.horariosPossiveis(vertice.vizinhos, diasPossiveis, horariosPossiveis)
+    # Método que calcula um possível horário para alocar
+    def encontrarHorario(self, dias, horarios, impedimentos):
 
-            # Caso encontre, insere essa pessoa nesse horário
-            # if disponivel:
-            #     vertice.setCor(corAtual)
-            # else:
-            #     vertice.setCor(-999)
+        # Tentativa de espalhar os horários randomicamente
+        random.shuffle(dias)
+        random.shuffle(horarios)
 
-    '''
-        Ainda não testei o método abaixo
-        Mas ele retorna um possível horário de acordo com as combinações dadas e seus vizinhos
-    '''
-    def horariosPossiveis(self, vizinhos, dias, horarios):
-
-        for vizinho in vizinhos:
-
+        for dia in dias:
             for horario in horarios:
-                for dia in dias:
+                if impedimentos.count((dia, horario)) == 0:
+                    return(dia, horario)
 
-                    umHorario = (horario, dia)
-                    if vizinho.cor != umHorario:
-                        return umHorario
-
-        return (-3, -3) # Tecnicamente um erro aleatorio só para identificarmos que ocorreu
+        return (-404, -404) # Definido como erro de horario não encontrado no nosso projeto
 
     # Em relação aos horários nesta aplicação, pessoas de risco têm preferência
     def priorizarGrupoDeRisco(self):
@@ -122,22 +120,26 @@ class Grafo:
     # Nada mais
     def GEROU_GRAFO(self):
 
-        semana = [[None for i in range(6)] for i in range(11)]
+        semana = [[[] for i in range(11)] for i in range(6)]
 
         for node in self.graph:
-            semana[node.cor[0]][node.cor[1]] = node.pessoa.index
-            #print(str(node.pessoa.index) + ' no dia ' + Enums.DIAS[node.cor[1]] + ' às ' + Enums.HORARIOS[node.cor[0]])
+            if(node.cor[0] >= 0):
+                semana[node.cor[0]][node.cor[1]].append(node.pessoa.quadroDeRisco)
+            else:
+                print(str(node.pessoa.index) + " não alocada")
+                #print(str(node.pessoa.index) + ' no dia ' + Enums.DIAS[node.cor[1]] + ' às ' + Enums.HORARIOS[node.cor[0]])
 
+        for idx, dia in enumerate(semana):
+            print(Enums.DIAS[idx] + ":\n")
 
-        dias = ["SEGUNDA", "TERCA", "QUARTA", "QUINTA", "SEXTA", "SABADO"]
-        semana.insert(0, dias)
+            for midx, horario in enumerate(dia):
 
-        for coisa in semana:
-            string = ''
-            for coisinha in coisa:
-                string += str(coisinha) if coisinha else "-"
-                string += "\t"
+                string = Enums.HORARIOS[midx] + " - "
+                for carinha in horario:
 
-            print(string)
+                    string += str(carinha)# if carinha else "-"
+                    string += ", "
 
-        print("\nCriei um index com a linha :)\nE fiz essa tabelinha\n")
+                print(string)
+
+            print("\n------\n")

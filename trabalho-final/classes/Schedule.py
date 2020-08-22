@@ -22,11 +22,17 @@ class Schedule:
 
     # Construtor da classe
     def __init__(self):
+        self.horariosUtilizados = 0
         self.schedule = [[[] for j in range(11)] for i in range(6)]
 
     # Insere pessoa em um dia e hora na "agenda"
     def insert(self, alguem, dia, hora):
+
+        if self.contarAgendados(dia, hora) == 0:
+            self.horariosUtilizados += 1
+            
         self.schedule[dia][hora].append(alguem)
+
 
     # Retorna o dia e hora da semana
     def get(self, dia, hora):

@@ -25,7 +25,12 @@ def main():
     pessoas = XlsReaderHelper(arquivo, planilha).buscarPessoas()
 
     grafo = Grafo(pessoas)
-    grafo.gerarHorario()
+
+    grafo.iniciarColoracao()
+    grafo.refinarColoracao()
+
+    grafo.prepararAgenda()
+    #grafo.refinarAgenda(5)
 
     # PARA FINS DE TESTE
     grafo.GEROU_GRAFO()

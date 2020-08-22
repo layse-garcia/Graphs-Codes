@@ -16,6 +16,10 @@ from Pessoa import Pessoa
 from enum.Enums import Enums
 '''-------------------------------------------------------------------------------------------------------------------------------'''
 Font = openpyxl.styles.Font
+PatternFill = openpyxl.styles.PatternFill
+# ...cell.fill =  PatternFill("solid", fgColor="FFFF99") RISCO
+# ...cell.fill =  PatternFill("solid", fgColor="99FF99") NÃO RISCO
+
 #Border = openpyxl.styles.Border
 
 

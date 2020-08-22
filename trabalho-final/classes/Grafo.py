@@ -75,9 +75,7 @@ class Grafo:
 
         return lista
 
-    def gerarHorario(self, limite = 5, priorizarGR = False):
-
-        self.sechedule = Schedule()
+    def iniciarColoracao(self, limite = 5, priorizarGR = False):
 
         if priorizarGR:
             self.priorizarGrupoDeRisco()
@@ -89,6 +87,35 @@ class Grafo:
             diasPossiveis = vertice.pessoa.diasDaSemana
 
             vertice.cor = self.encontrarHorario(diasPossiveis, horariosPossiveis, vertice.horariosImpedidos())
+
+    def realocarUmVertice(self, notForeverAlone):
+
+        indice = [i for i in range(len(self.graph))]
+        random.shuffle(indice)
+
+        grafo = self.graph
+
+        for i in indice:
+
+            ambosMesmoGrupo = grafo[i].pessoa.getQuadroDeRisco() == notForeverAlone.pessoa.getQuadroDeRisco()
+            corValida = grafo[i].cor != (-404, -404)
+
+            if ambosMesmoGrupo and corValida:
+                return grafo[i].cor
+
+    def refinarColoracao(self):
+        for vertice in self.graph:
+            if vertice.cor == (-404, -404):
+                vertice.cor = self.realocarUmVertice(vertice)
+
+    def prepararAgenda(self):
+
+        self.schedule = Schedule()
+
+        for pessoa in self.graph:
+            self.schedule.insert(pessoa, pessoa.cor[0], pessoa.cor[1])
+
+        print("Sua agenda foi gerada")
 
     # Método que calcula um possível horário para alocar
     def encontrarHorario(self, dias, horarios, impedimentos):
@@ -115,6 +142,10 @@ class Grafo:
                 lista.insert(0, vertice)
 
         self.graph = lista
+
+    def refinarAgenda(self, maximo):
+        if maximo > 0:
+            self.schedule.refinar(maximo)
 
     # Só serve pra imprimeir quantos vizinhos tem cada vértice
     # Nada mais
@@ -143,3 +174,5 @@ class Grafo:
                 print(string)
 
             print("\n------\n")
+
+        print("HORARIOS OCUPADOS: " + str(self.schedule.horariosUtilizados) + "/66")

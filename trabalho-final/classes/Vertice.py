@@ -56,10 +56,6 @@ class Vertice:
     def horariosImpedidos(self):
         return [vizinho.cor for vizinho in self.vizinhos]
 
-	# Destrutor - chamando o destrutor
-    #def __del__(self):
-        #print('Destruindo um vértice para que o mundo possa sobreviver')
-
     # Método que decide se um vértice é incompatível com outro
     # Retorna TRUE se deve ser criada uma aresta
     def compare(self, vertice):

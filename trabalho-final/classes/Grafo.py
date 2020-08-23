@@ -143,36 +143,7 @@ class Grafo:
 
         self.graph = lista
 
+    # Chama o método de refinamento dos horários da agenda
     def refinarAgenda(self, maximo):
         if maximo > 0:
             self.schedule.refinar(maximo)
-
-    # Só serve pra imprimeir quantos vizinhos tem cada vértice
-    # Nada mais
-    def GEROU_GRAFO(self):
-
-        semana = [[[] for i in range(11)] for i in range(6)]
-
-        for node in self.graph:
-            if(node.cor[0] >= 0):
-                semana[node.cor[0]][node.cor[1]].append(node.pessoa.quadroDeRisco)
-            else:
-                print(str(node.pessoa.index) + " não alocada")
-                #print(str(node.pessoa.index) + ' no dia ' + Enums.DIAS[node.cor[1]] + ' às ' + Enums.HORARIOS[node.cor[0]])
-
-        for idx, dia in enumerate(semana):
-            print(Enums.DIAS[idx] + ":\n")
-
-            for midx, horario in enumerate(dia):
-
-                string = Enums.HORARIOS[midx] + " - "
-                for carinha in horario:
-
-                    string += str(carinha)# if carinha else "-"
-                    string += ", "
-
-                print(string)
-
-            print("\n------\n")
-
-        print("HORARIOS OCUPADOS: " + str(self.schedule.horariosUtilizados) + "/66")

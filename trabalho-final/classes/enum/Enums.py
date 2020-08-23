@@ -4,7 +4,7 @@
 ######             TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                ######
 ######                   TEMA: COLORAÇÃO EM GRAFOS                       ######
 ######                                                                   ######
-######                      Python Version: 3.4                          ######
+######                      Python Version: 2.7                          ######
 ######                                                                   ######
 ######      KELLYSON SANTOS DA SILVA - 201820366 - 10A                   ######
 ######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######

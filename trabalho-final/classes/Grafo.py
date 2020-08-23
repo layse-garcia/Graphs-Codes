@@ -4,7 +4,7 @@
 ######             TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                ######
 ######                   TEMA: COLORAÇÃO EM GRAFOS                       ######
 ######                                                                   ######
-######                      Python Version: 3.4                          ######
+######                      Python Version: 2.7                          ######
 ######                                                                   ######
 ######      KELLYSON SANTOS DA SILVA - 201820366 - 10A                   ######
 ######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######
@@ -18,6 +18,7 @@ from enum.Enums import Enums
 
 import copy
 import random
+import sys
 '''-------------------------------------------------------------------------------------------------------------------------------'''
 
 '''
@@ -31,41 +32,33 @@ Neste problema utilizamos lista de adjacências para representar
 nosso grafo :)
 '''
 
-'''
-Resultados computacionais:
-~ Instância teste: apresente a instância real que você vai resolver.
-Priorize a resolução de instâncias reais. Caso os dados que você testará forem
-proprietários, crie um esquema de geração de dados artificiais baseados no que
-você viu na prática.
-Isso é importante, para que sua simulação seja validada;
-~ Experimentos: execute o seu algoritmo, indicando o valor da função objetivo
-(distância, número de cores, etc), tempo computacional, e o impacto que sua
-solução teria na prática;
-~ Forças e fraquezas: explique as forças e fraquezas de sua abordagem, e comente
-o que poderia ser melhorado (se for o caso);
-'''
-
 class Grafo:
 
     # O construtor da nossa instância
-    def __init__(self, pessoas):
+    def __init__(self, pessoas, cidade):
 
         if len(pessoas) > 0:
             self.totalVertices = len(pessoas)
-            self.graph = self.prepararGrafo(pessoas)
+            self.graph = self.prepararGrafo(pessoas, cidade)
 
         else:
             raise PessoasException('Não temos pessoas aqui, algo de errado não está certo')
 
     # Através das pessoas recebidas inicia um Grafo
     # e trata de criar as arestas iniciais
-    def prepararGrafo(self, pessoas):
+    def prepararGrafo(self, pessoas, cidade):
 
         lista = []
 
         for pessoa in pessoas:
             if not pessoa.getSintomas():
-                lista.append(Vertice(pessoa))
+                if cidade == 'Todos' or pessoa.getCidade() == cidade:
+                    lista.append(Vertice(pessoa))
+
+        # Encerra o programa caso não encontrem dados com as informações fornecidas
+        if len(lista) < 1:
+            print('\nOps! Nenhum dado foi encontrado através das informações fornecidas :(\nVerifique as informações e tente novamente.\n')
+            sys.exit()
 
         for vertex in lista:
             for innerVertex in lista:
@@ -75,6 +68,9 @@ class Grafo:
 
         return lista
 
+    # Método que incializa a Coloração podendo ou não dar prioridade as pessoas
+    # do Grupo de Risco. Também chama a função que encontra o melhor horário, de
+    # acordo com os dados fornecidos da pessoa e analisa os horários já preenchidos.
     def iniciarColoracao(self, limite = 5, priorizarGR = False):
 
         if priorizarGR:
@@ -88,6 +84,9 @@ class Grafo:
 
             vertice.cor = self.encontrarHorario(diasPossiveis, horariosPossiveis, vertice.horariosImpedidos())
 
+    # Método que realoca uma pessoa em algum diae horário possível.
+    # Define que se existir uma pessoa do mesmo Grupo em um horário coincidente
+    # ao possível realocamento, então continua retornando a cor.
     def realocarUmVertice(self, notForeverAlone):
 
         indice = [i for i in range(len(self.graph))]
@@ -103,11 +102,13 @@ class Grafo:
             if ambosMesmoGrupo and corValida:
                 return grafo[i].cor
 
+    # Método que identifica os vértices não coloridos e tenta os realocar
     def refinarColoracao(self):
         for vertice in self.graph:
             if vertice.cor == (-404, -404):
                 vertice.cor = self.realocarUmVertice(vertice)
 
+    # Método que cria a Agenda baseado no Grafo criado
     def prepararAgenda(self):
 
         self.schedule = Schedule()

@@ -4,7 +4,7 @@
 ######             TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                ######
 ######                   TEMA: COLORAÇÃO EM GRAFOS                       ######
 ######                                                                   ######
-######                      Python Version: 3.4                          ######
+######                      Python Version: 2.7                          ######
 ######                                                                   ######
 ######      KELLYSON SANTOS DA SILVA - 201820366 - 10A                   ######
 ######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######
@@ -14,12 +14,13 @@ import openpyxl #install from: pip install openpyxl
 import os.path
 from Pessoa import Pessoa
 from enum.Enums import Enums
-'''-------------------------------------------------------------------------------------------------------------------------------'''
+'''------------------------------------------------Objetos de Estilo da Planilha--------------------------------------------------'''
 Font = openpyxl.styles.Font
 PatternFill = openpyxl.styles.PatternFill
 Alignment = openpyxl.styles.Alignment
 Border = openpyxl.styles.Border
 Side = openpyxl.styles.Side
+'''-------------------------------------------------------------------------------------------------------------------------------'''
 
 '''
     A classe XlsHelper é a classe que auxilia na leitura e escrita da planilha.
@@ -31,6 +32,8 @@ Side = openpyxl.styles.Side
           A Classe também é responsável por criar os detalhes mais informativos na
           planilha, definindo cores, bordas, entre outros.
 '''
+
+# Classe que lê da Planilha
 class Reader:
 
     # Construtor da classe inicializa o leitor do arquivo
@@ -79,6 +82,7 @@ class Reader:
 def toInteger(lista):
     return list(map(int, lista))
 
+# Classe que Escreve em Planilha
 class Writer:
     # Construtor da classe inicializa o escritor do arquivo
     def __init__(self, nomePlanilhaResultado):
@@ -98,7 +102,8 @@ class Writer:
             # Carrega o arquivo do disco
             arquivo = openpyxl.load_workbook(filename = self.nomePlanilhaResultado)
             # Apaga a planilha quando o arquivo já existe
-            del arquivo[nomeDaAba]
+            if nomeDaAba in arquivo.sheetnames:
+                del arquivo[nomeDaAba]
         else:
             # Cria um novo arquivo
             arquivo = openpyxl.Workbook()

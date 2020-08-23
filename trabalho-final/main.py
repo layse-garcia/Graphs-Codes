@@ -15,6 +15,7 @@ from classes.XlsHelper import Reader, Writer
 from classes.Grafo import Grafo
 
 import sys
+import time
 '''-------------------------------------------------------------------------------------------------------------------------------'''
 
 '''
@@ -34,6 +35,9 @@ def main():
     pessoas = Reader(arquivoEntrada, planilha).buscarPessoas()
 
     cidade = input("Digite uma cidade sem os acentos para filtrar: (Caso não queira, pressione ENTER)\n- ")
+
+    # Inicializa a contagem de tempo, após a entrada do usuário
+    start_time = time.time()
 
     # Caso não tenha sido escolhida nenhuma cidade, atribui "Todos" à variável
     if len(cidade) == 0:
@@ -64,6 +68,9 @@ def main():
 
     # Gera a planilha para imprimir os resultados
     planilhaResultado = Writer(arquivoResultado).CriaPlanilha(grafo.schedule, nomeDaAba = cidade)
+
+    # Imprime tempo de execução
+    print("--- Tempo de Execução: %.4f segundos ---" % float((time.time() - start_time)))
 
 if __name__ == "__main__":
     main()

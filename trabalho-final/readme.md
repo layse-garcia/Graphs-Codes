@@ -1,6 +1,8 @@
 # Apenas o trabalho de Grafos
 
-- Python 3.4 (Não necessariamente por enquanto)
+### Python Version
+
+- Python 3.8
 
 ### Sobre o trabalho
 

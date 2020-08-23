@@ -23,8 +23,8 @@ Side = openpyxl.styles.Side
 '''-------------------------------------------------------------------------------------------------------------------------------'''
 
 '''
-    A classe XlsHelper é a classe que auxilia na leitura e escrita da planilha.
-    Possui duas classes, como já dito, uma de leitura e outra de escrita.
+    A arquivo XlsHelper é um arquivo que auxilia na leitura e escrita de planilhas.
+    Possui duas classes, uma de leitura e outra de escrita.
         - Reader: faz a leitura do arquivo, criando objetos da Classe Pessoa e
           retornando a lista de pessoas;
         - Writer: faz a escrita em uma nova planilha com os dados obtidos na Agenda

@@ -84,7 +84,7 @@ class Grafo:
 
             vertice.cor = self.encontrarHorario(diasPossiveis, horariosPossiveis, vertice.horariosImpedidos())
 
-    # Método que realoca uma pessoa em algum diae horário possível.
+    # Método que realoca uma pessoa em algum dia e horário possível.
     # Define que se existir uma pessoa do mesmo Grupo em um horário coincidente
     # ao possível realocamento, então continua retornando a cor.
     def realocarUmVertice(self, notForeverAlone):

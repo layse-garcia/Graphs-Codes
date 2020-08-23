@@ -53,6 +53,7 @@ class Vertice:
     def getCoresVizinhas(self):
         return [vizinho.cor for vizinho in self.vizinhos]
 
+    # Analisa os horários já preenchidos
     def horariosImpedidos(self):
         return [vizinho.cor for vizinho in self.vizinhos]
 

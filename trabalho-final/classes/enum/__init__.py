@@ -1,7 +1,7 @@
 # coding: utf-8
 
 ###############################################################################
-######             TRABALHO PRÁTICO : ALGORITMO EM GRAFOS                ######
+######             TRABALHO PRÁTICO : ALGORITMOS EM GRAFOS               ######
 ######                   TEMA: COLORAÇÃO EM GRAFOS                       ######
 ######                                                                   ######
 ######                      Python Version: 3.8                          ######

@@ -11,9 +11,9 @@
 ###############################################################################
 '''------------------------------------------------------------Imports------------------------------------------------------------'''
 import openpyxl #install from: pip install openpyxl
-import os.path
-from Pessoa import Pessoa
-from enum.Enums import Enums
+import os
+from .Pessoa import Pessoa
+from .enum.Enums import Enums
 '''------------------------------------------------Objetos de Estilo da Planilha--------------------------------------------------'''
 Font = openpyxl.styles.Font
 PatternFill = openpyxl.styles.PatternFill

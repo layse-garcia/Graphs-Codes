@@ -10,7 +10,7 @@
 ######      LAYSE CRISTINA SILVA GARCIA - 201811177 - 10A                ######
 ###############################################################################
 '''------------------------------------------------------------Imports------------------------------------------------------------'''
-from Pessoa import Pessoa
+from .Pessoa import Pessoa
 '''-------------------------------------------------------------------------------------------------------------------------------'''
 
 '''
@@ -30,12 +30,12 @@ class Vertice:
         self.vizinhos = []
 
     # Retorna o objeto pessoa
-	def getPessoa(self):
-		return self.pessoa
+    def getPessoa(self):
+        return self.pessoa
 
     # Retorna a cor do vértice(representando o horário)
-	def getCor(self):
-		return self.cor
+    def getCor(self):
+        return self.cor
 
     # Define a cor do vértice
     def setCor(self, cor):

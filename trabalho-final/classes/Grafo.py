@@ -11,10 +11,10 @@
 ###############################################################################
 
 '''------------------------------------------------------------Imports------------------------------------------------------------'''
-from Vertice import Vertice
-from Pessoa import Pessoa
-from Schedule import Schedule
-from enum.Enums import Enums
+from .Vertice import Vertice
+from .Pessoa import Pessoa
+from .Schedule import Schedule
+from .enum.Enums import Enums
 
 import copy
 import random

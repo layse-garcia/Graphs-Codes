@@ -33,7 +33,7 @@ def main():
     # Faz a leitura do arquivo
     pessoas = Reader(arquivoEntrada, planilha).buscarPessoas()
 
-    cidade = raw_input("Digite uma cidade sem os acentos para filtrar: (Caso não queira, pressione ENTER)\n- ")
+    cidade = input("Digite uma cidade sem os acentos para filtrar: (Caso não queira, pressione ENTER)\n- ")
 
     # Caso não tenha sido escolhida nenhuma cidade, atribui "Todos" à variável
     if len(cidade) == 0:
